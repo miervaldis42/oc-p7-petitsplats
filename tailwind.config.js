@@ -11,6 +11,9 @@ export default {
       colors: {
         primary: "#FFD15B",
       },
+      backgroundImage: {
+        hero: "url(../assets/hero.jpg)",
+      },
     },
   },
   plugins: [],
