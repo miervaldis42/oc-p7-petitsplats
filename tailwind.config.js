@@ -3,7 +3,15 @@
 export default {
   content: ["./index.html", "./src/**/*.{js,ts}"],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        heading: ["Anton", "sans-serif"],
+        text: ["Manrope", "sans-serif"],
+      },
+      colors: {
+        primary: "#FFD15B",
+      },
+    },
   },
   plugins: [],
 };
