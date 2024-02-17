@@ -10,6 +10,7 @@ export default {
       },
       colors: {
         primary: "#FFD15B",
+        page: "#EDEDED",
       },
       backgroundImage: {
         hero: "url(../assets/hero.jpg)",
