@@ -13,6 +13,7 @@ import {
   UstensilFilterOptionsType,
 } from "../types/filterTypes";
 
+// The 3 types of filters
 const filterTypes = ["ingredient", "appliance", "ustensil"];
 
 /**
@@ -58,7 +59,7 @@ function extractUniqueValuesForFilters(recipes: RecipesType): FiltersType {
  * @description Construct filters based on recipe data.
  *
  * @param {RecipesType} recipes List of recipes.
- * @returns {void} Populate the recipe filters.
+ * @returns {void}
  */
 function buildFilters(recipes: RecipesType): void {
   const filterOptionArrays: FiltersType =
@@ -159,4 +160,96 @@ function toggleDropdown(): void {
   });
 }
 
-export { extractUniqueValuesForFilters, buildFilters, toggleDropdown };
+/**
+ * @function
+ * @description Create a tag when the user clicks on one of the filter options.
+ *
+ * @returns {void}
+ */
+function addFilterTag(): void {
+  filterTypes.forEach((type) => {
+    // Get all filter options
+    const filterOptions = document.querySelectorAll(`#${type}Options p`);
+
+    // Get the container where buttons will be appended
+    const tagContainer = document.getElementById(`${type}TagContainer`);
+
+    /**
+     * @function
+     * @description Check if the given tag is already listed in the tag container
+     *
+     * @param {string} tagText
+     * @returns {boolean}
+     */
+    function checkIfATagIsAlreadyListed(tagText: string): boolean {
+      let tagExists = false;
+
+      if (tagContainer !== null) {
+        const tags = tagContainer.querySelectorAll("p");
+
+        tags.forEach((tag) => {
+          if (tag.innerHTML.trim() === tagText) {
+            tagExists = true;
+          }
+        });
+      }
+
+      return tagExists;
+    }
+
+    /**
+     * @function
+     * @decription To create a tag with the same text as the clicked option
+     *
+     * @param {any} event Mouse event
+     * @returns {void}
+     */
+    function createTag(event: any): void {
+      const optionValue = (event.target as HTMLElement).innerText;
+      const tagAlreadyExists = checkIfATagIsAlreadyListed(optionValue);
+
+      if (tagAlreadyExists === false) {
+        const newTag = `<div
+                  aria-label="Tag '${optionValue}' du filtre 'Ingrédients'"
+                  class="h-12 w-full flex justify-between items-center bg-primary rounded-md py-4 px-[18px] mb-2"
+                >
+                  <p class="font-text">${optionValue}</p>
+                  <button
+                    id="${type}TagDeleteButton"
+                    aria-label="Permet de vider la barre de recherche liée aux ${type}s"
+                    type="button"
+                    class="group h-[22px] w-[22px] flex justify-center items-center focus:outline-primary hover:bg-black hover:rounded-full"
+                  >
+                    <svg
+                      fill="none"
+                      viewBox="0 0 17 17"
+                      xmlns="http://www.w3.org/2000/svg"
+                      aria-label="Icône du bouton permettant de supprimer ce filtre '${type}'"
+                      class="h-[18px] w-[16px] group-hover:h-[8px] group-hover:w-[8px]"
+                    >
+                      <path
+                        d="M15 15L8.5 8.5M8.5 8.5L2 2M8.5 8.5L15 2M8.5 8.5L2 15"
+                        class="stroke-black stroke-[2] group-hover:stroke-primary"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                  </button>
+                </div>`;
+        tagContainer!.insertAdjacentHTML("beforeend", newTag);
+      }
+    }
+
+    // Add click event listeners to each <p> element
+    filterOptions.forEach((option) => {
+      option.addEventListener("click", createTag);
+    });
+  });
+}
+
+export {
+  extractUniqueValuesForFilters,
+  buildFilters,
+  toggleDropdown,
+  addFilterTag,
+};

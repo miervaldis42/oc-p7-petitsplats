@@ -1,5 +1,9 @@
 // Imports
-import { buildFilters, toggleDropdown } from "../components/recipeFilters";
+import {
+  buildFilters,
+  toggleDropdown,
+  addFilterTag,
+} from "../components/recipeFilters";
 import { updateTotalNumberOfRecipes } from "../components/recipesTotalNumber";
 import { createRecipeList } from "../components/recipeCard";
 
@@ -17,7 +21,10 @@ const recipes = getRecipes("development");
 buildFilters(recipes);
 toggleDropdown();
 
-// Total
+// Tags
+addFilterTag();
+
+// Total Number of Recipes
 updateTotalNumberOfRecipes(recipes);
 
 // Recipe List
