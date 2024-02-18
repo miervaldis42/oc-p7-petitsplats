@@ -1,5 +1,6 @@
 // Imports
-// import { updateTotalNumberOfRecipes } from "../components/recipesTotalNumber";
+import { buildFilters, toggleDropdown } from "../components/recipeFilters";
+import { updateTotalNumberOfRecipes } from "../components/recipesTotalNumber";
 import { createRecipeList } from "../components/recipeCard";
 
 // Services
@@ -13,7 +14,11 @@ const recipes = getRecipes("development");
 */
 
 // Filter Section
-// updateTotalNumberOfRecipes(recipes);
+buildFilters(recipes);
+toggleDropdown();
+
+// Total
+updateTotalNumberOfRecipes(recipes);
 
 // Recipe List
 createRecipeList(recipes);
