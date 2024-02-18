@@ -116,6 +116,22 @@
         aria-label="Contenu principal composé de la liste des recettes et de menus déroulants permettant de filtrer cette liste"
         class="bg-page pt-[20px] px-[102px] pb-[200px]"
       >
+        <!-- Filters & Total number of recipes -->
+        <section
+          id="filterContainer"
+          aria-label="Contenant les filtres et le nombre total de recettes affichées"
+          class="flex justify-between items-center"
+        >
+          <!-- Total of Recipes -->
+          <p
+            aria-label="Nombre total de recettes affichées"
+            class="self-baseline font-heading cursor-default"
+          >
+            <span id="totalNumberOfRecipes"></span>
+            recettes
+          </p>
+        </section>
+
         <!-- Recipe List Container -->
         <section
           id="recipeListContainer"
