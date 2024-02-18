@@ -122,6 +122,380 @@
           aria-label="Contenant les filtres et le nombre total de recettes affichées"
           class="flex justify-between items-center"
         >
+          <!-- Filtres -->
+          <div id="filters" class="w-[700px] flex justify-between">
+            <div aria-label="Menu déroulant du filtre 'Ingrédients'">
+              <button
+                id="ingredientsFilterDropdownButton"
+                aria-label="Permettant d'ouvrir le menu déroulant des ingrédients"
+                class="h-[56px] w-[195px] flex justify-around items-center font-text font-bold bg-white rounded-md focus:outline-primary"
+              >
+                Ingrédients
+
+                <!-- 'Caret down' Icon -->
+                <svg
+                  id="ingredientsFilterCaretDown"
+                  aria-label="Icône du bouton d'ouverture du menu déroulant"
+                  width="15"
+                  height="8"
+                  viewBox="0 0 15 8"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M1 1L7.5 7L14 1"
+                    stroke="#1B1B1B"
+                    stroke-linecap="round"
+                  />
+                </svg>
+
+                <!-- 'Caret up' Icon -->
+                <svg
+                  id="ingredientsFilterCaretUp"
+                  aria-label="Icône du bouton de fermeture du menu déroulant"
+                  width="15"
+                  height="8"
+                  viewBox="0 0 15 8"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="hidden"
+                >
+                  <path
+                    d="M1 7L7.5 1L14 7"
+                    stroke="#1B1B1B"
+                    stroke-linecap="round"
+                  />
+                </svg>
+              </button>
+
+              <div
+                id="ingredientsFilterDropdownContent"
+                aria-label="Contenu du menu déroulant avec la liste des différents ingrédients"
+                class="hidden z-10 w-[195px] bg-white rounded-b-md pt-[2px] px-[16px] pb-3"
+              >
+                <!-- Ingredient Searchbar -->
+                <div class="relative">
+                  <label for="ingredientQuery" class="sr-only">
+                    Barre de recherche parmi la liste des ingrédients
+                  </label>
+                  <input
+                    id="ingredientsSearchbar"
+                    type="text"
+                    name="ingredientQuery"
+                    aria-label="Barre de recherche liée aux ingrédients"
+                    placeholder="Rechercher..."
+                    class="h-[36px] w-full border-[1px] border-solid border-gray-400 caret-gray-400 rounded-sm focus:outline-primary p-2 pr-0"
+                  />
+
+                  <!-- Ingredients Searchbar Buttons -->
+                  <div
+                    id="ingrdientsSearchButtonGroup"
+                    class="absolute inset-y-0 right-1 flex items-center"
+                  >
+                    <button
+                      id="ingredientsClearSearchButton"
+                      type="reset"
+                      aria-label="Permet de vider la barre de recherche liée aux ingrédients"
+                      class="invisible group h-[20px] w-[22px] flex justify-center items-center mr-[10%] focus:outline-primary hover:bg-black hover:rounded-full"
+                    >
+                      <svg
+                        fill="none"
+                        viewBox="0 0 17 17"
+                        xmlns="http://www.w3.org/2000/svg"
+                        aria-label="Icône du bouton permettant de vider la barre de recherche liée aux ingrédients"
+                        class="h-[10px] w-[8px] group-hover:h-[8px] group-hover:w-[8px]"
+                      >
+                        <path
+                          d="M15 15L8.5 8.5M8.5 8.5L2 2M8.5 8.5L15 2M8.5 8.5L2 15"
+                          class="stroke-[#7A7A7A] stroke-[2.5] group-hover:stroke-primary"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                      </svg>
+                    </button>
+
+                    <button
+                      id="ingredientsSearchButton"
+                      type="button"
+                      aria-label="Permet d'ajouter un nouveau filtre 'Ingrédients' afin de réduire la liste des recettes proposées"
+                      class="group h-6 w-6 flex justify-center items-center p-[2px] hover:bg-primary hover:rounded-md focus:outline-primary"
+                    >
+                      <svg
+                        viewBox="0 0 29 29"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                        aria-label="Icône du bouton pour lancer la recherche"
+                        class="h-[14px] w-[14px]"
+                      >
+                        <path
+                          d="M19.3536 19.6464L28.3536 28.6464M21 11C21 16.5228 16.5228 21 11 21C5.47715 21 1 16.5228 1 11C1 5.47715 5.47715 1 11 1C16.5228 1 21 5.47715 21 11Z"
+                          class="stroke-[2.5] stroke-gray-400 group-hover:stroke-black"
+                        />
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+                <!-- End of Ingredient Searchbar -->
+
+                <!-- Ingredient Options -->
+                <div
+                  id="ingredientOptions"
+                  aria-label="Liste d'ingrédients pour filtrer la liste des recettes proposées"
+                  class="h-52 overflow-auto pb-3 mt-4"
+                ></div>
+              </div>
+              <!-- End of Ingredient Filter Dropdown Content -->
+            </div>
+
+            <!-- Appliance Filter -->
+            <div aria-label="Menu déroulant du filtre 'Appareils'">
+              <button
+                id="appliancesFilterDropdownButton"
+                aria-label="Permettant d'ouvrir le menu déroulant des appareils"
+                class="h-[56px] w-[195px] flex justify-around items-center font-text font-bold bg-white rounded-md focus:outline-primary"
+              >
+                Appareils
+
+                <!-- 'Caret down' Icon -->
+                <svg
+                  id="appliancesFilterCaretDown"
+                  width="15"
+                  height="8"
+                  viewBox="0 0 15 8"
+                  aria-label="Icône du bouton d'ouverture du menu déroulant"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M1 1L7.5 7L14 1"
+                    stroke="#1B1B1B"
+                    stroke-linecap="round"
+                  />
+                </svg>
+
+                <!-- 'Caret up' Icon -->
+                <svg
+                  id="appliancesFilterCaretUp"
+                  width="15"
+                  height="8"
+                  viewBox="0 0 15 8"
+                  aria-label="Icône du bouton de fermeture du menu déroulant"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="hidden"
+                >
+                  <path
+                    d="M1 7L7.5 1L14 7"
+                    stroke="#1B1B1B"
+                    stroke-linecap="round"
+                  />
+                </svg>
+              </button>
+
+              <div
+                id="appliancesFilterDropdownContent"
+                aria-label="Contenu du menu déroulant avec la liste des différents appareils"
+                class="hidden z-10 w-[195px] bg-white rounded-b-md pt-[2px] px-[16px] pb-3"
+              >
+                <!-- Appliance Searchbar -->
+                <div class="relative">
+                  <label for="applianceQuery" class="sr-only">
+                    Barre de recherche parmi la liste des appareils
+                  </label>
+                  <input
+                    id="appliancesSearchbar"
+                    type="text"
+                    name="applianceQuery"
+                    aria-label="Barre de recherche liée aux appareils"
+                    placeholder="Rechercher..."
+                    class="h-[36px] w-full border-[1px] border-solid border-gray-400 caret-gray-400 rounded-sm focus:outline-primary p-2 pr-0"
+                  />
+
+                  <!-- Appliances Searchbar Buttons -->
+                  <div
+                    id="appliancesSearchButtonGroup"
+                    class="absolute inset-y-0 right-1 flex items-center"
+                  >
+                    <button
+                      id="appliancesClearSearchButton"
+                      type="reset"
+                      aria-label="Permet de vider la barre de recherche liée aux appareils"
+                      class="invisible group h-[20px] w-[22px] flex justify-center items-center mr-[10%] focus:outline-primary hover:bg-black hover:rounded-full"
+                    >
+                      <svg
+                        fill="none"
+                        viewBox="0 0 17 17"
+                        xmlns="http://www.w3.org/2000/svg"
+                        aria-label="Icône du bouton permettant de vider la barre de recherche liée aux appareils"
+                        class="h-[10px] w-[8px] group-hover:h-[8px] group-hover:w-[8px]"
+                      >
+                        <path
+                          d="M15 15L8.5 8.5M8.5 8.5L2 2M8.5 8.5L15 2M8.5 8.5L2 15"
+                          class="stroke-[#7A7A7A] stroke-[2.5] group-hover:stroke-primary"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                      </svg>
+                    </button>
+
+                    <button
+                      id="appliancesSearchButton"
+                      type="button"
+                      aria-label="Permet d'ajouter un nouveau filtre 'Appareils' afin de réduire la liste des recettes proposées"
+                      class="group h-6 w-6 flex justify-center items-center p-[2px] hover:bg-primary hover:rounded-md focus:outline-primary"
+                    >
+                      <svg
+                        viewBox="0 0 29 29"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                        aria-label="Icône du bouton pour lancer la recherche"
+                        class="h-[14px] w-[14px]"
+                      >
+                        <path
+                          d="M19.3536 19.6464L28.3536 28.6464M21 11C21 16.5228 16.5228 21 11 21C5.47715 21 1 16.5228 1 11C1 5.47715 5.47715 1 11 1C16.5228 1 21 5.47715 21 11Z"
+                          class="stroke-[2.5] stroke-gray-400 group-hover:stroke-black"
+                        />
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+                <!-- End of Appliance Searchbar -->
+
+                <!-- Appliance Options -->
+                <div
+                  id="applianceOptions"
+                  aria-label="Liste des appareils pour filtrer la liste des recettes proposées"
+                  class="h-52 overflow-auto pb-3 mt-4"
+                ></div>
+              </div>
+              <!-- End of Appliance Filter Dropdown Content -->
+            </div>
+
+            <!-- Ustensils Filter -->
+            <div aria-label="Menu déroulant du filtre 'Ustensils'">
+              <button
+                id="ustensilsFilterDropdownButton"
+                aria-label="Permettant d'ouvrir le menu déroulant des ustensils"
+                class="h-[56px] w-[195px] flex justify-around items-center font-text font-bold bg-white rounded-md focus:outline-primary"
+              >
+                Ustensils
+
+                <!-- 'Caret down' Icon -->
+                <svg
+                  id="ustensilsFilterCaretDown"
+                  width="15"
+                  height="8"
+                  viewBox="0 0 15 8"
+                  aria-label="Icône du bouton d'ouverture du menu déroulant"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M1 1L7.5 7L14 1"
+                    stroke="#1B1B1B"
+                    stroke-linecap="round"
+                  />
+                </svg>
+
+                <!-- 'Caret up' Icon -->
+                <svg
+                  id="ustensilsFilterCaretUp"
+                  width="15"
+                  height="8"
+                  viewBox="0 0 15 8"
+                  aria-label="Icône du bouton de fermeture du menu déroulant"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="hidden"
+                >
+                  <path
+                    d="M1 7L7.5 1L14 7"
+                    stroke="#1B1B1B"
+                    stroke-linecap="round"
+                  />
+                </svg>
+              </button>
+
+              <div
+                id="ustensilsFilterDropdownContent"
+                aria-label="Contenu du menu déroulant avec la liste des différents ustensils"
+                class="hidden z-10 w-[195px] bg-white rounded-b-md pt-[2px] px-[16px] pb-3"
+              >
+                <!-- ustensilsSearchbar -->
+                <div class="relative">
+                  <label for="ustensilQuery" class="sr-only">
+                    Barre de recherche parmi la liste des ustensils
+                  </label>
+                  <input
+                    id="ustensilsSearchbar"
+                    type="text"
+                    name="ustensilQuery"
+                    aria-label="Barre de recherche liée aux ustensils"
+                    placeholder="Rechercher..."
+                    class="h-[36px] w-full border-[1px] border-solid border-gray-400 caret-gray-400 rounded-sm focus:outline-primary p-2 pr-0"
+                  />
+
+                  <!-- Ustensils Searchbar Buttons -->
+                  <div
+                    id="ustensilsSearchButtonGroup"
+                    class="absolute inset-y-0 right-1 flex items-center"
+                  >
+                    <button
+                      id="ustensilsClearSearchButton"
+                      type="reset"
+                      aria-label="Permet de vider la barre de recherche liée aux ustensils"
+                      class="invisible group h-[20px] w-[22px] flex justify-center items-center mr-[10%] focus:outline-primary hover:bg-black hover:rounded-full"
+                    >
+                      <svg
+                        fill="none"
+                        viewBox="0 0 17 17"
+                        xmlns="http://www.w3.org/2000/svg"
+                        aria-label="Icône du bouton permettant de vider la barre de recherche liée aux ustensils"
+                        class="h-[10px] w-[8px] group-hover:h-[8px] group-hover:w-[8px]"
+                      >
+                        <path
+                          d="M15 15L8.5 8.5M8.5 8.5L2 2M8.5 8.5L15 2M8.5 8.5L2 15"
+                          class="stroke-[#7A7A7A] stroke-[2.5] group-hover:stroke-primary"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                      </svg>
+                    </button>
+
+                    <button
+                      id="ustensilsSearchButton"
+                      type="button"
+                      aria-label="Permet d'ajouter un nouveau filtre 'Ustensils' afin de réduire la liste des recettes proposées"
+                      class="group h-6 w-6 flex justify-center items-center p-[2px] hover:bg-primary hover:rounded-md focus:outline-primary"
+                    >
+                      <svg
+                        viewBox="0 0 29 29"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                        aria-label="Icône du bouton pour lancer la recherche"
+                        class="h-[14px] w-[14px]"
+                      >
+                        <path
+                          d="M19.3536 19.6464L28.3536 28.6464M21 11C21 16.5228 16.5228 21 11 21C5.47715 21 1 16.5228 1 11C1 5.47715 5.47715 1 11 1C16.5228 1 21 5.47715 21 11Z"
+                          class="stroke-[2.5] stroke-gray-400 group-hover:stroke-black"
+                        />
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+                <!-- End of Ustensil Searchbar -->
+
+                <!-- Ustensils Options -->
+                <div
+                  id="ustensilOptions"
+                  aria-label="Liste des ustensils pour filtrer la liste des recettes proposées"
+                  class="h-52 overflow-auto pb-3 mt-4"
+                ></div>
+              </div>
+              <!-- End of Ustensil Filter Dropdown Content -->
+            </div>
+          </div>
+
           <!-- Total of Recipes -->
           <p
             aria-label="Nombre total de recettes affichées"
