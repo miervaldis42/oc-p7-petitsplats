@@ -209,13 +209,12 @@ function addFilterTag(): void {
       const tagAlreadyExists = checkIfATagIsAlreadyListed(optionValue);
 
       if (tagAlreadyExists === false) {
-        const newTag = `<div
+        const newTagHTML = `<div
                   aria-label="Tag '${optionValue}' du filtre 'Ingrédients'"
                   class="h-12 w-full flex justify-between items-center bg-primary rounded-md py-4 px-[18px] mb-2"
                 >
                   <p class="font-text">${optionValue}</p>
                   <button
-                    id="${type}TagDeleteButton"
                     aria-label="Permet de vider la barre de recherche liée aux ${type}s"
                     type="button"
                     class="group h-[22px] w-[22px] flex justify-center items-center focus:outline-primary hover:bg-black hover:rounded-full"
@@ -236,7 +235,19 @@ function addFilterTag(): void {
                     </svg>
                   </button>
                 </div>`;
-        tagContainer!.insertAdjacentHTML("beforeend", newTag);
+
+        if (tagContainer !== null) {
+          tagContainer.insertAdjacentHTML("beforeend", newTagHTML);
+
+          // Get the newly added tag
+          const newTag = tagContainer.lastElementChild as HTMLElement;
+          const deleteButton = newTag.querySelector("button");
+
+          // Add click event listener to the delete button
+          deleteButton!.addEventListener("click", () => {
+            tagContainer.removeChild(newTag);
+          });
+        }
       }
     }
 
