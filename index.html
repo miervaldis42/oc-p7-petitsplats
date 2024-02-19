@@ -46,12 +46,11 @@
           <div class="relative flex justify-center items-center">
             <label for="q" class="sr-only">Barre de recherche</label>
             <input
-              id="searchbar"
+              id="q"
               type="text"
               name="q"
               aria-label="Barre de recherche"
               placeholder="Rechercher une recette, un ingrédient, ..."
-              aria-placeholder="Rechercher une recette, un ingrédient, ..."
               class="h-[72px] w-7/12 rounded-xl focus:outline-primary py-[24px] px-[35px]"
             />
 
@@ -124,7 +123,7 @@
         >
           <!-- Filtres -->
           <div id="filters" class="w-[700px] flex justify-between">
-            <div aria-label="Menu déroulant du filtre 'Ingrédients'">
+            <div>
               <button
                 id="ingredientsFilterDropdownButton"
                 aria-label="Permettant d'ouvrir le menu déroulant des ingrédients"
@@ -170,7 +169,6 @@
 
               <div
                 id="ingredientsFilterDropdownContent"
-                aria-label="Contenu du menu déroulant avec la liste des différents ingrédients"
                 class="hidden z-10 w-[195px] bg-white rounded-b-md pt-[2px] px-[16px] pb-3"
               >
                 <!-- Ingredient Searchbar -->
@@ -179,7 +177,7 @@
                     Barre de recherche parmi la liste des ingrédients
                   </label>
                   <input
-                    id="ingredientsSearchbar"
+                    id="ingredientQuery"
                     type="text"
                     name="ingredientQuery"
                     aria-label="Barre de recherche liée aux ingrédients"
@@ -240,7 +238,6 @@
                 <!-- Ingredient Options -->
                 <div
                   id="ingredientOptions"
-                  aria-label="Liste d'ingrédients pour filtrer la liste des recettes proposées"
                   class="h-52 overflow-auto pb-3 mt-4"
                 ></div>
               </div>
@@ -249,13 +246,12 @@
               <!-- Ingredient Filter Tag List -->
               <div
                 id="ingredientTagContainer"
-                aria-label="Liste des tags du filtre 'Ingrédients' choisis"
                 class="h-auto w-[203px] mt-5"
               ></div>
             </div>
 
             <!-- Appliance Filter -->
-            <div aria-label="Menu déroulant du filtre 'Appareils'">
+            <div>
               <button
                 id="appliancesFilterDropdownButton"
                 aria-label="Permettant d'ouvrir le menu déroulant des appareils"
@@ -301,7 +297,6 @@
 
               <div
                 id="appliancesFilterDropdownContent"
-                aria-label="Contenu du menu déroulant avec la liste des différents appareils"
                 class="hidden z-10 w-[195px] bg-white rounded-b-md pt-[2px] px-[16px] pb-3"
               >
                 <!-- Appliance Searchbar -->
@@ -310,7 +305,7 @@
                     Barre de recherche parmi la liste des appareils
                   </label>
                   <input
-                    id="appliancesSearchbar"
+                    id="applianceQuery"
                     type="text"
                     name="applianceQuery"
                     aria-label="Barre de recherche liée aux appareils"
@@ -371,7 +366,6 @@
                 <!-- Appliance Options -->
                 <div
                   id="applianceOptions"
-                  aria-label="Liste des appareils pour filtrer la liste des recettes proposées"
                   class="h-52 overflow-auto pb-3 mt-4"
                 ></div>
               </div>
@@ -380,13 +374,12 @@
               <!-- Appliance Filter Tag List -->
               <div
                 id="applianceTagContainer"
-                aria-label="Liste des tags du filtre 'Appareils' choisis"
                 class="h-auto w-[203px] mt-5"
               ></div>
             </div>
 
             <!-- Ustensils Filter -->
-            <div aria-label="Menu déroulant du filtre 'Ustensils'">
+            <div>
               <button
                 id="ustensilsFilterDropdownButton"
                 aria-label="Permettant d'ouvrir le menu déroulant des ustensils"
@@ -432,7 +425,6 @@
 
               <div
                 id="ustensilsFilterDropdownContent"
-                aria-label="Contenu du menu déroulant avec la liste des différents ustensils"
                 class="hidden z-10 w-[195px] bg-white rounded-b-md pt-[2px] px-[16px] pb-3"
               >
                 <!-- ustensilsSearchbar -->
@@ -441,7 +433,7 @@
                     Barre de recherche parmi la liste des ustensils
                   </label>
                   <input
-                    id="ustensilsSearchbar"
+                    id="ustensilQuery"
                     type="text"
                     name="ustensilQuery"
                     aria-label="Barre de recherche liée aux ustensils"
@@ -502,7 +494,6 @@
                 <!-- Ustensils Options -->
                 <div
                   id="ustensilOptions"
-                  aria-label="Liste des ustensils pour filtrer la liste des recettes proposées"
                   class="h-52 overflow-auto pb-3 mt-4"
                 ></div>
               </div>
@@ -511,27 +502,23 @@
               <!-- Ustensil Filter Tag List -->
               <div
                 id="ustensilTagContainer"
-                aria-label="Liste des tags du filtre 'Ustensils' choisis"
                 class="h-auto w-[203px] mt-5"
               ></div>
             </div>
           </div>
 
           <!-- Total of Recipes -->
-          <p
-            aria-label="Nombre total de recettes affichées"
-            class="self-baseline font-heading cursor-default"
-          >
+          <p class="self-baseline font-heading cursor-default">
             <span id="totalNumberOfRecipes"></span>
-            recettes
+            recette(s)
           </p>
         </section>
 
         <!-- Recipe List Container -->
-        <section
+        <div
           id="recipeListContainer"
           class="flex justify-between flex-wrap gap-y-16 mt-14"
-        ></section>
+        ></div>
       </main>
     </div>
 

@@ -28,13 +28,15 @@ function createRecipeCard(recipe: RecipeType) {
         <div class="relative overflow-hidden h-[252px] bg-cover">
             <img src="/src/data/recipes/photos/Recette${
               recipe.id < 10 ? `0${recipe.id}` : recipe.id
-            }.webp" class="absolute h-full w-full object-cover" />
+            }.webp" alt="${
+    recipe.name
+  }" class="absolute h-full w-full object-cover" />
         </div>
 
         <h2 class="font-heading my-8 mx-6">${recipe.name}</h2>
 
         <!-- Recipe Content -->
-        <section class="flex flex-col mx-6">
+        <div class="flex flex-col mx-6">
 
             <!-- Recipe -->
             <section class="h-[112px] flex flex-col">
@@ -71,7 +73,7 @@ function createRecipeCard(recipe: RecipeType) {
                       .join("")}
                 </div>
             </section>            
-        </section>
+        </div>
     </article>
   `;
 
