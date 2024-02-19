@@ -107,13 +107,13 @@ function toggleDropdown(): void {
       `${type}sFilterCaretUp`
     ) as HTMLImageElement;
 
+    const filterDropdownContent = document.getElementById(
+      `${type}sFilterDropdownContent`
+    ) as HTMLDivElement;
+
     // Actions when the user clicks on one of the filter buttons
     filterDropdownButton.addEventListener("click", (e) => {
       e.stopPropagation();
-
-      const filterDropdownContent = document.getElementById(
-        `${type}sFilterDropdownContent`
-      ) as HTMLDivElement;
 
       const filterDropdownIsClosed =
         filterDropdownContent.classList.contains("hidden");
@@ -135,6 +135,27 @@ function toggleDropdown(): void {
         filterDropdownContent.classList.add("hidden");
       }
     });
+
+    // When click outside of the filter area
+    const filterDropdown = filterDropdownButton.parentNode;
+    function handleClickOutsideOfDropdown(event: MouseEvent) {
+      event.stopPropagation();
+
+      if (
+        filterDropdown !== null &&
+        !filterDropdown.contains(event.target as Node)
+      ) {
+        filterDropdownButton.classList.remove("rounded-t-md");
+        filterDropdownButton.classList.add("rounded-md");
+
+        filterCaretDown.classList.remove("hidden");
+        filterCaretUp.classList.add("hidden");
+
+        filterDropdownContent.classList.add("hidden");
+      }
+    }
+
+    document.addEventListener("click", handleClickOutsideOfDropdown);
   });
 }
 
