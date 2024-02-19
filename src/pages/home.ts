@@ -1,5 +1,6 @@
 // Imports
-import { updateTotalNumberOfRecipes } from "../components/recipesTotalNumber";
+// import { updateTotalNumberOfRecipes } from "../components/recipesTotalNumber";
+import { createRecipeList } from "../components/recipeCard";
 
 // Services
 import { getRecipes } from "../services/apiHandler";
@@ -12,4 +13,7 @@ const recipes = getRecipes("development");
 */
 
 // Filter Section
-updateTotalNumberOfRecipes(recipes);
+// updateTotalNumberOfRecipes(recipes);
+
+// Recipe List
+createRecipeList(recipes);
