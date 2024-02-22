@@ -1,16 +1,32 @@
 // Imports
+import { displayNoMatchedRecipeErrorMessage } from "./errors";
+
+// Store
+import { globalState } from "../data/store";
+
+// Types
 import { RecipesType, RecipeType } from "../types/recipeTypes";
 
 function createRecipeList(recipes: RecipesType) {
-  const recipeListContainer = document.getElementById("recipeListContainer");
+  const recipeListContainer = document.getElementById(
+    "recipeListContainer"
+  ) as HTMLDivElement;
+
+  // Empty Recipe List container to populate it with the right data
+  recipeListContainer.innerHTML = "";
+
   if (recipes.length > 0) {
     recipes.forEach((recipe) => {
       const cardHTML = createRecipeCard(recipe);
 
-      if (recipeListContainer !== null) {
-        recipeListContainer.insertAdjacentHTML("beforeend", cardHTML);
-      }
+      recipeListContainer.insertAdjacentHTML("beforeend", cardHTML);
     });
+  } else {
+    const query = globalState.query;
+
+    if (query !== null) {
+      displayNoMatchedRecipeErrorMessage(query);
+    }
   }
 }
 
@@ -55,7 +71,7 @@ function createRecipeCard(recipe: RecipeType) {
                       .map(
                         (ingredient) => `
                         <div>
-                            <p class="font-text font-medium">${
+                            <p class="font-text font-medium first-letter:uppercase">${
                               ingredient.ingredient
                             }</p>
                             ${
