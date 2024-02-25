@@ -55,6 +55,17 @@ function handleMainSearchbar(recipes: RecipesType) {
     }
   };
 
+  // Search through recipe when one of the following events
+  document.addEventListener("keydown", function (event) {
+    // Check if Ctrl + K is pressed
+    if (event.ctrlKey && event.key === "k") {
+      // Prevent the default action of the Ctrl + K combination (e.g., opening browser's search bar)
+      event.preventDefault();
+
+      // Focus on the search bar
+      mainSearchInput.focus();
+    }
+  });
   mainSearchInput.addEventListener("input", search);
   mainSearchbarSearchButton.addEventListener("click", search);
 }
