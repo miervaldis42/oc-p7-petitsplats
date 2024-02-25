@@ -1,5 +1,63 @@
 // Store
-import { updateListWithOriginalRecipes, resetQuery } from "../data/store";
+import {
+  updateListWithOriginalRecipes,
+  resetQuery,
+  updateQuery,
+  updateRecipeList,
+} from "../data/store";
+
+// Types
+import { RecipesType } from "../types/recipeTypes";
+
+/**
+ * @function
+ * @description Search the query entered by the user among the recipes
+ *
+ * @param {RecipesType} recipes
+ */
+function handleMainSearchbar(recipes: RecipesType) {
+  const mainSearchInput = document.getElementById("q") as HTMLInputElement;
+  const mainSearchbarSearchButton = document.getElementById(
+    "searchButtonCTA"
+  ) as HTMLButtonElement;
+  const mainSearchbarClearButton = document.getElementById(
+    "searchButtonClear"
+  ) as HTMLButtonElement;
+
+  const search = () => {
+    // Get user query & basically sanitize it
+    const query = mainSearchInput.value.toLowerCase();
+
+    if (query.length >= 3) {
+      handleMainSearchbarClearButton(
+        false,
+        mainSearchbarClearButton,
+        mainSearchInput
+      );
+
+      updateQuery(query);
+
+      // Main Search funtionality
+      const filteredRecipes = searchUsingArrayMethods(recipes, query);
+
+      // Update the total number of recipes suggested
+      updateRecipeList(filteredRecipes);
+    } else {
+      handleMainSearchbarClearButton(
+        true,
+        mainSearchbarClearButton,
+        mainSearchInput
+      );
+
+      // Display the original recipe list
+      resetQuery();
+      updateListWithOriginalRecipes();
+    }
+  };
+
+  mainSearchInput.addEventListener("input", search);
+  mainSearchbarSearchButton.addEventListener("click", search);
+}
 
 /**
  * @function
@@ -35,3 +93,5 @@ function handleMainSearchbarClearButton(
     });
   }
 }
+
+export { handleMainSearchbar };
