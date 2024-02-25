@@ -1,5 +1,5 @@
 // Imports
-import { searchUsingArrayMethods } from "./mainSearch";
+import { searchUsingLoops } from "./mainSearch";
 
 // Store
 import {
@@ -359,7 +359,7 @@ function addFilterTag(): void {
             updateListWithOriginalRecipes();
 
             // Get a new filtered recipe list based on user query
-            const filteredByUserQueryRecipes = searchUsingArrayMethods(
+            const filteredByUserQueryRecipes = searchUsingLoops(
               globalState.recipes,
               globalState.query
             );

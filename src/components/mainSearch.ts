@@ -48,7 +48,7 @@ function handleMainSearchbar(recipes: RecipesType) {
       updateQuery(query);
 
       // Main Search funtionality
-      const filteredRecipes = searchUsingArrayMethods(recipes, query);
+      const filteredRecipes = searchUsingLoops(recipes, query);
 
       // Update the total number of recipes suggested
       updateRecipeList(filteredRecipes);
@@ -86,24 +86,30 @@ function handleMainSearchbar(recipes: RecipesType) {
 
 /**
  * @function
- * @description Create a new list of recipes based on the user query using Array methods.
+ * @description Create a new list of recipes based on the user query using native loops.
  *
  * @param recipes A given list of recipes
  * @returns {RecipesType} A filtered list of recipes
  */
-function searchUsingArrayMethods(
-  recipes: RecipesType,
-  query: string
-): RecipesType {
-  const filteredRecipes = recipes.filter((recipe) => {
+function searchUsingLoops(recipes: RecipesType, query: string): RecipesType {
+  const filteredRecipes = [];
+  for (let i = 0; i < recipes.length; i++) {
+    const recipe = recipes[i];
     const matchTitle = recipe.name.toLowerCase().includes(query);
-    const matchIngredients = recipe.ingredients.some((ingredientInfo) => {
-      return ingredientInfo.ingredient.toLowerCase() === query.toLowerCase();
-    });
+    const ingredients = recipe.ingredients;
+    let matchIngredients = false;
+    for (let j = 0; j < ingredients.length; j++) {
+      if (ingredients[j].ingredient.toLowerCase() === query.toLowerCase()) {
+        matchIngredients = true;
+        break;
+      }
+    }
     const matchDescription = recipe.description.toLowerCase().includes(query);
 
-    return matchTitle || matchIngredients || matchDescription;
-  });
+    if (matchTitle || matchIngredients || matchDescription) {
+      filteredRecipes.push(recipe);
+    }
+  }
 
   return filteredRecipes;
 }
@@ -147,4 +153,4 @@ function handleMainSearchbarClearButton(
   }
 }
 
-export { handleMainSearchbar, searchUsingArrayMethods };
+export { handleMainSearchbar, searchUsingLoops };
