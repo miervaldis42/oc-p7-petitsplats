@@ -264,14 +264,41 @@ function addFilterTag(): void {
         // Filter & Update the recipe list
         filterByTag(globalState.recipes, [{ type, tag: optionValue }]);
 
-        tagContainer.insertAdjacentHTML("beforeend", newTagHTML);
-
-        // Get the newly added tag
-        const newTag = tagContainer.lastElementChild as HTMLElement;
-        const deleteButton = newTag.querySelector("button");
+        // Create the delete button of the filter tag
+        const newTag = tagContainer.lastElementChild as HTMLDivElement;
+        const deleteButton = newTag.querySelector(
+          "button"
+        ) as HTMLButtonElement;
 
         // Add click event listener to the delete button
-        deleteButton!.addEventListener("click", () => {
+        deleteButton.addEventListener("click", () => {
+          updateFilters("remove", { type, tag: optionValue });
+
+          // Use cases: Based on the content of the user query
+          if (globalState.query === null) {
+            updateListWithOriginalRecipes();
+
+            if (globalState.filters.length > 0) {
+              filterByTag(globalState.recipes, globalState.filters);
+            }
+          } else {
+            // Reset the data with mock data
+            updateListWithOriginalRecipes();
+
+            // Get a new filtered recipe list based on user query
+            const filteredByUserQueryRecipes = searchUsingArrayMethods(
+              globalState.recipes,
+              globalState.query
+            );
+
+            // Filter if there is some filter tags
+            if (globalState.filters.length === 0) {
+              updateRecipeList(filteredByUserQueryRecipes);
+            } else {
+              filterByTag(filteredByUserQueryRecipes, globalState.filters);
+            }
+          }
+
           tagContainer.removeChild(newTag);
         });
       }
