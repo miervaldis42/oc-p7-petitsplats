@@ -26,7 +26,13 @@ function handleMainSearchbar(recipes: RecipesType) {
 
   const search = () => {
     // Get user query & basically sanitize it
-    const query = mainSearchInput.value.toLowerCase();
+    const query = mainSearchInput.value
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#39;")
+      .toLowerCase();
 
     if (query.length >= 3) {
       handleMainSearchbarClearButton(
