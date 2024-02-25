@@ -1,31 +1,19 @@
 // Imports
-import {
-  buildFilters,
-  toggleDropdown,
-  addFilterTag,
-} from "../components/recipeFilters";
-import { updateTotalNumberOfRecipes } from "../components/recipesTotalNumber";
-import { createRecipeList } from "../components/recipeCard";
+import { handleMainSearchbar } from "../components/mainSearch";
+import { toggleDropdown } from "../components/recipeFilters";
 
-// Services
-import { getRecipes } from "../services/apiHandler";
+// Store
+import { globalState, updateListWithOriginalRecipes } from "../data/store";
 
-// Data
-const recipes = getRecipes("development");
+/**
+ * Home Page
+ */
 
-/*
-  Generate data for the page
-*/
+// Initialize data
+updateListWithOriginalRecipes();
+
+// Main search
+handleMainSearchbar(globalState.recipes);
 
 // Filter Section
-buildFilters(recipes);
 toggleDropdown();
-
-// Tags
-addFilterTag();
-
-// Total Number of Recipes
-updateTotalNumberOfRecipes(recipes);
-
-// Recipe List
-createRecipeList(recipes);
