@@ -8,6 +8,7 @@ import {
 
 import {
   ApplianceFilterOptionsType,
+  FilterOptionsType,
   FiltersType,
   IngredientFilterOptionsType,
   UstensilFilterOptionsType,
@@ -22,12 +23,14 @@ const filterTypes = ["ingredient", "appliance", "ustensil"];
  *
  * @param {RecipesType} recipes A given list of recipes
  *
- * @returns {FiltersType} An object containing three arrays.
+ * @returns {FilterOptionsType} An object containing three arrays.
  * @returns {IngredientFilterOptionsType} ingredientsOptions - The first array containing numbers.
  * @returns {ApplianceFilterOptionsType} appliancesOptions - The second array containing strings.
  * @returns {UstensilFilterOptionsType} ustensilsOptions - The third array containing booleans.
  */
-function extractUniqueValuesForFilters(recipes: RecipesType): FiltersType {
+function extractUniqueValuesForFilters(
+  recipes: RecipesType
+): FilterOptionsType {
   // Use `Set` to avoid getting any duplicate values
   const uniqueIngredients = new Set<string>();
   const uniqueAppliances = new Set<ApplianceType>();
@@ -62,7 +65,7 @@ function extractUniqueValuesForFilters(recipes: RecipesType): FiltersType {
  * @returns {void}
  */
 function buildFilters(recipes: RecipesType): void {
-  const filterOptionArrays: FiltersType =
+  const filterOptionArrays: FilterOptionsType =
     extractUniqueValuesForFilters(recipes);
 
   function populateOptions(
