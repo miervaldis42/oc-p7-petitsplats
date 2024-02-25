@@ -72,6 +72,9 @@ function buildFilters(recipes: RecipesType): void {
       | ApplianceFilterOptionsType
       | UstensilFilterOptionsType
   ) {
+    // Empty the container to better populate it
+    optionsContainer.innerHTML = "";
+
     items.forEach((item) => {
       const option: HTMLParagraphElement = document.createElement("p");
       option.className =
