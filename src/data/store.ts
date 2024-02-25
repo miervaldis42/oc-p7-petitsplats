@@ -1,10 +1,12 @@
 // Imports
+import { buildFilters } from "../components/recipeFilters";
 import { updateTotalNumberOfRecipes } from "../components/recipesTotalNumber";
 import { createRecipeList } from "../components/recipeCard";
 
 // Types
 import { GlobalStateType } from "../types/storeTypes";
 import { RecipesType } from "../types/recipeTypes";
+import { ActionType, FilterInfoType } from "../types/filterTypes";
 
 // Services
 import { getRecipes } from "../services/apiHandler";
@@ -14,6 +16,7 @@ import { getRecipes } from "../services/apiHandler";
  */
 let globalState: GlobalStateType = {
   recipes: [],
+  filters: [],
   query: null,
 };
 
@@ -24,7 +27,7 @@ let globalState: GlobalStateType = {
  * @returns {void}
  */
 function resetGlobalState(): void {
-  globalState = { recipes: [], query: null };
+  globalState = { recipes: [], filters: [], query: null };
 }
 
 /**
@@ -36,8 +39,6 @@ function resetGlobalState(): void {
 function updateListWithOriginalRecipes(): void {
   const originalRecipes = getRecipes("development");
   globalState.recipes = originalRecipes;
-
-  resetQuery();
 
   updateUI();
 }
@@ -62,9 +63,44 @@ function updateRecipeList(newRecipeList: RecipesType): void {
  * @return {void}
  */
 function updateUI(): void {
+  buildFilters(globalState.recipes);
   updateTotalNumberOfRecipes(globalState.recipes);
 
   createRecipeList(globalState.recipes);
+}
+
+/**
+ * @function
+ * @description Reset the values of filters.
+ *
+ * @returns {void}
+ */
+function resetFilters(): void {
+  globalState.filters = [];
+}
+
+/**
+ * @function
+ * @description Modify the values of the filters in the global state.
+ *
+ * @param {FiltersType} filter A given filter
+ * @returns {void}
+ */
+function updateFilters(action: ActionType, filter: FilterInfoType): void {
+  switch (action) {
+    case "add":
+      globalState.filters.push(filter);
+      break;
+    case "remove":
+      const newFiltersArray = globalState.filters.filter(
+        (item) => !(item.type === filter.type && item.tag === filter.tag)
+      );
+
+      globalState.filters = newFiltersArray;
+      break;
+    default:
+      break;
+  }
 }
 
 /**
@@ -92,6 +128,8 @@ export {
   resetGlobalState,
   updateListWithOriginalRecipes,
   updateRecipeList,
+  resetFilters,
+  updateFilters,
   resetQuery,
   updateQuery,
 };
