@@ -1,8 +1,30 @@
 {
   "name": "oc-p7-petitsplats",
+  "author": "miervaldis42",
   "private": true,
   "version": "0.10.0",
   "type": "module",
+  "description": "Website for 'Petits Plats' company.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/miervaldis42/oc-p7-petitsplats.git"
+  },
+  "homepage": "https://github.com/miervaldis42/oc-p7-petitsplats#readme",
+  "bugs": {
+    "url": "https://github.com/miervaldis42/oc-p7-petitsplats/issues"
+  },
+  "keywords": [
+    "OpenClassrooms",
+    "oc",
+    "Project 7",
+    "P7",
+    "p7",
+    "vite",
+    "typescript",
+    "tailwindcss",
+    "postcss"
+  ],
+  "main": "./index.html",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
@@ -14,5 +36,6 @@
     "tailwindcss": "^3.4.1",
     "typescript": "^5.2.2",
     "vite": "^5.0.8"
-  }
+  },
+  "license": "ISC"
 }
