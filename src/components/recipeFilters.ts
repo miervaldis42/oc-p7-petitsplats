@@ -1,3 +1,15 @@
+// Imports
+import { searchUsingArrayMethods } from "./mainSearch";
+
+// Store
+import {
+  globalState,
+  updateFilters,
+  updateListWithOriginalRecipes,
+  updateQuery,
+  updateRecipeList,
+} from "../data/store";
+
 // Types
 import {
   RecipeType,
@@ -7,15 +19,17 @@ import {
 } from "../types/recipeTypes";
 
 import {
-  ApplianceFilterOptionsType,
   FilterOptionsType,
   FiltersType,
+  FilterInfoType,
   IngredientFilterOptionsType,
+  ApplianceFilterOptionsType,
   UstensilFilterOptionsType,
+  FilterOptionValueType,
 } from "../types/filterTypes";
 
 // The 3 types of filters
-const filterTypes = ["ingredient", "appliance", "ustensil"];
+const filterTypes: FiltersType = ["ingredient", "appliance", "ustensil"];
 
 /**
  * @function
@@ -93,6 +107,8 @@ function buildFilters(recipes: RecipesType): void {
 
     populateOptions(options, (filterOptionArrays as any)[optionArray]);
   });
+
+  addFilterTag();
 }
 
 /**
@@ -178,7 +194,9 @@ function addFilterTag(): void {
     const filterOptions = document.querySelectorAll(`#${type}Options p`);
 
     // Get the container where buttons will be appended
-    const tagContainer = document.getElementById(`${type}TagContainer`);
+    const tagContainer = document.getElementById(
+      `${type}TagContainer`
+    ) as HTMLDivElement;
 
     /**
      * @function
@@ -190,15 +208,12 @@ function addFilterTag(): void {
     function checkIfATagIsAlreadyListed(tagText: string): boolean {
       let tagExists = false;
 
-      if (tagContainer !== null) {
-        const tags = tagContainer.querySelectorAll("p");
-
-        tags.forEach((tag) => {
-          if (tag.innerHTML.trim() === tagText) {
-            tagExists = true;
-          }
-        });
-      }
+      const tags = tagContainer.querySelectorAll("p");
+      tags.forEach((tag) => {
+        if (tag.innerHTML.trim() === tagText) {
+          tagExists = true;
+        }
+      });
 
       return tagExists;
     }
@@ -211,10 +226,13 @@ function addFilterTag(): void {
      * @returns {void}
      */
     function createTag(event: any): void {
-      const optionValue = (event.target as HTMLElement).innerText;
+      const optionValue: FilterOptionValueType = (event.target as HTMLElement)
+        .innerText;
       const tagAlreadyExists = checkIfATagIsAlreadyListed(optionValue);
 
       if (tagAlreadyExists === false) {
+        updateFilters("add", { type, tag: optionValue });
+
         const newTagHTML = `<div
                   aria-label="Tag '${optionValue}' du filtre 'Ingrédients'"
                   class="h-12 w-full flex justify-between items-center bg-primary rounded-md py-4 px-[18px] mb-2"
@@ -241,19 +259,21 @@ function addFilterTag(): void {
                     </svg>
                   </button>
                 </div>`;
+        tagContainer.insertAdjacentHTML("beforeend", newTagHTML);
 
-        if (tagContainer !== null) {
-          tagContainer.insertAdjacentHTML("beforeend", newTagHTML);
+        // Filter & Update the recipe list
+        filterByTag(globalState.recipes, [{ type, tag: optionValue }]);
 
-          // Get the newly added tag
-          const newTag = tagContainer.lastElementChild as HTMLElement;
-          const deleteButton = newTag.querySelector("button");
+        tagContainer.insertAdjacentHTML("beforeend", newTagHTML);
 
-          // Add click event listener to the delete button
-          deleteButton!.addEventListener("click", () => {
-            tagContainer.removeChild(newTag);
-          });
-        }
+        // Get the newly added tag
+        const newTag = tagContainer.lastElementChild as HTMLElement;
+        const deleteButton = newTag.querySelector("button");
+
+        // Add click event listener to the delete button
+        deleteButton!.addEventListener("click", () => {
+          tagContainer.removeChild(newTag);
+        });
       }
     }
 
@@ -262,6 +282,62 @@ function addFilterTag(): void {
       option.addEventListener("click", createTag);
     });
   });
+}
+
+/**
+ * @function
+ * @description Filter a given recipe list using the filters.
+ *
+ * @param {RecipesType} recipes
+ * @param {Array<FilterInfoType>} filters
+ *
+ * @returns {void}
+ */
+function filterByTag(
+  recipes: RecipesType,
+  filters: Array<FilterInfoType>
+): void {
+  const filteredByTagRecipes = recipes.filter((recipe) => {
+    let matchesAllTags = true;
+
+    filters.forEach(({ type, tag }) => {
+      let matchType = false;
+
+      switch (type) {
+        case "ingredient":
+          matchType = recipe.ingredients.some(
+            (ingredientInfo) =>
+              tag.toLowerCase() === ingredientInfo.ingredient.toLowerCase()
+          );
+          break;
+        case "appliance":
+          matchType = recipe.appliance.toLowerCase() === tag.toLowerCase();
+          break;
+        case "ustensil":
+          matchType = recipe.ustensils.some(
+            (ustensil) => tag.toLowerCase() === ustensil.toLowerCase()
+          );
+          break;
+        default:
+          break;
+      }
+
+      // Only set matchesAllTags to false if none of the tags match
+      if (!matchType) {
+        matchesAllTags = false;
+      }
+    });
+
+    return matchesAllTags;
+  });
+
+  if (filteredByTagRecipes.length === 0 && filters.length > 0) {
+    filters.forEach((filter) => {
+      updateQuery(filter.tag);
+    });
+  }
+
+  updateRecipeList(filteredByTagRecipes);
 }
 
 export {
