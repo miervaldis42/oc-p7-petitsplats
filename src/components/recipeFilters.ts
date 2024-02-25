@@ -91,8 +91,8 @@ function buildFilters(recipes: RecipesType): void {
     populateOptions(optionsContainer, (filterOptionArrays as any)[optionArray]);
   });
 
-  // TODO Feature: Search among filters
-  // searchFilter(filterOptionArrays);
+  // Feature: Search among filters
+  searchFilter(filterOptionArrays);
 }
 
 function populateOptions(
@@ -185,6 +185,73 @@ function toggleDropdown(): void {
     }
 
     document.addEventListener("click", handleClickOutsideOfDropdown);
+  });
+}
+
+/**
+ * @function
+ * @description Search feature of the filter searchbars.
+ *
+ * @param {FilterOptionsType} filterOptionArrays
+ * @returns {void}
+ */
+function searchFilter(filterOptionArrays: FilterOptionsType): void {
+  filterTypes.forEach((type) => {
+    const optionsContainer = document.getElementById(
+      `${type}Options`
+    ) as HTMLDivElement;
+    const optionArray = `${type}sOptions`;
+
+    const searchbar = document.getElementById(
+      `${type}Query`
+    ) as HTMLInputElement;
+    const searchbarButton = document.getElementById(
+      `${type}sSearchButton`
+    ) as HTMLButtonElement;
+    const searchbarClearButton = document.getElementById(
+      `${type}sClearSearchButton`
+    ) as HTMLButtonElement;
+
+    // Search among filters
+    const searchAmongFilters = () => {
+      const query = searchbar.value.toLowerCase();
+
+      if (query !== null && query.trim().length > 3) {
+        const options = (filterOptionArrays as any)[optionArray].filter(
+          (optionName: string) => {
+            return optionName.toLowerCase().includes(query.toLowerCase());
+          }
+        );
+        populateOptions(optionsContainer, options);
+
+        // Clear filter searchbar feature
+        searchbarClearButton.classList.remove("invisible");
+        searchbarClearButton.addEventListener("click", () => {
+          // Empty the searchbar
+          searchbar.value = "";
+
+          // Make the 'clear' button invisible
+          searchbarClearButton.classList.add("invisible");
+
+          // Reset the filter list
+          populateOptions(
+            optionsContainer,
+            (filterOptionArrays as any)[optionArray]
+          );
+        });
+      } else {
+        populateOptions(
+          optionsContainer,
+          (filterOptionArrays as any)[optionArray]
+        );
+
+        // Make the 'clear' button invisible
+        searchbarClearButton.classList.add("invisible");
+      }
+    };
+
+    searchbar.addEventListener("input", searchAmongFilters);
+    searchbarButton.addEventListener("click", searchAmongFilters);
   });
 }
 
