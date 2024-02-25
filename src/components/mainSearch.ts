@@ -78,6 +78,30 @@ function handleMainSearchbar(recipes: RecipesType) {
 
 /**
  * @function
+ * @description Create a new list of recipes based on the user query using Array methods.
+ *
+ * @param recipes A given list of recipes
+ * @returns {RecipesType} A filtered list of recipes
+ */
+function searchUsingArrayMethods(
+  recipes: RecipesType,
+  query: string
+): RecipesType {
+  const filteredRecipes = recipes.filter((recipe) => {
+    const matchTitle = recipe.name.toLowerCase().includes(query);
+    const matchIngredients = recipe.ingredients.some((ingredientInfo) => {
+      return ingredientInfo.ingredient.toLowerCase() === query.toLowerCase();
+    });
+    const matchDescription = recipe.description.toLowerCase().includes(query);
+
+    return matchTitle || matchIngredients || matchDescription;
+  });
+
+  return filteredRecipes;
+}
+
+/**
+ * @function
  * @description Handle the functionalities of the main searchbar 'Clear' button.
  *
  * @param {boolean} isActive Display state of the button
@@ -111,4 +135,4 @@ function handleMainSearchbarClearButton(
   }
 }
 
-export { handleMainSearchbar };
+export { handleMainSearchbar, searchUsingArrayMethods };
