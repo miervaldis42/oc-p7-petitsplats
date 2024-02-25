@@ -82,32 +82,38 @@ function buildFilters(recipes: RecipesType): void {
   const filterOptionArrays: FilterOptionsType =
     extractUniqueValuesForFilters(recipes);
 
-  function populateOptions(
-    optionsContainer: HTMLDivElement,
-    items:
-      | IngredientFilterOptionsType
-      | ApplianceFilterOptionsType
-      | UstensilFilterOptionsType
-  ) {
-    // Empty the container to better populate it
-    optionsContainer.innerHTML = "";
-
-    items.forEach((item) => {
-      const option: HTMLParagraphElement = document.createElement("p");
-      option.className =
-        "font-text first-letter:uppercase py-[9px] pl-2 hover:bg-primary hover:cursor-pointer";
-      option.textContent = item;
-      optionsContainer.appendChild(option);
-    });
-  }
-
   filterTypes.forEach((type) => {
-    const options = document.getElementById(`${type}Options`) as HTMLDivElement;
+    const optionsContainer = document.getElementById(
+      `${type}Options`
+    ) as HTMLDivElement;
     const optionArray = `${type}sOptions`;
 
-    populateOptions(options, (filterOptionArrays as any)[optionArray]);
+    populateOptions(optionsContainer, (filterOptionArrays as any)[optionArray]);
   });
 
+  // TODO Feature: Search among filters
+  // searchFilter(filterOptionArrays);
+}
+
+function populateOptions(
+  optionsContainer: HTMLDivElement,
+  optionNames:
+    | IngredientFilterOptionsType
+    | ApplianceFilterOptionsType
+    | UstensilFilterOptionsType
+) {
+  // Empty the container to better populate it
+  optionsContainer.innerHTML = "";
+
+  optionNames.forEach((item) => {
+    const option: HTMLParagraphElement = document.createElement("p");
+    option.className =
+      "font-text first-letter:uppercase py-[9px] pl-2 hover:bg-primary hover:cursor-pointer";
+    option.textContent = item;
+    optionsContainer.appendChild(option);
+  });
+
+  // Feature: Add filter tag
   addFilterTag();
 }
 
