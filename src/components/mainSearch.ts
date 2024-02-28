@@ -62,6 +62,10 @@ function handleMainSearchbar(recipes: RecipesType) {
       // Display the original recipe list
       resetQuery();
       updateListWithOriginalRecipes();
+
+      if (globalState.filters.length > 0) {
+        filterByTag(globalState.recipes, globalState.filters);
+      }
     }
   };
 
