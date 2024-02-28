@@ -2,7 +2,7 @@
   "name": "oc-p7-petitsplats",
   "author": "miervaldis42",
   "private": true,
-  "version": "1.0.0",
+  "version": "1.0.1",
   "type": "module",
   "description": "Website for 'Petits Plats' company.",
   "repository": {
