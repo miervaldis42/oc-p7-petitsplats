@@ -46,4 +46,4 @@ Here are 2 algorithms we could use for the main searchbar:
 | **Native Loops**  |    _[searchUsingLoops( )](./src/components/mainSearch.ts)_     | `client/feat-search-nativeLoops`  |
 | **Array Methods** | _[searchUsingArrayMethods( )](./src/components/mainSearch.ts)_ | `client/feat-search-arrayMethods` |
 
-The **'Array Method'** algorithm is the chosen solution implemented in the final version, present in the `master` baranch.
+The **'Array Method'** algorithm is the chosen solution implemented in the final version, present in the `main` baranch.
