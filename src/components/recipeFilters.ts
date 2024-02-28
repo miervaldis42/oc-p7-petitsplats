@@ -445,4 +445,5 @@ export {
   buildFilters,
   toggleDropdown,
   addFilterTag,
+  filterByTag,
 };

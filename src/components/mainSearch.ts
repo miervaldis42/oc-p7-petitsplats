@@ -1,9 +1,13 @@
+// Imports
+import { filterByTag } from "./recipeFilters";
+
 // Store
 import {
   updateListWithOriginalRecipes,
   resetQuery,
   updateQuery,
   updateRecipeList,
+  globalState,
 } from "../data/store";
 
 // Types
@@ -105,8 +109,12 @@ function handleMainSearchbarClearButton(
       button.classList.add("invisible");
 
       // Display the original recipe list
-      updateListWithOriginalRecipes();
       resetQuery();
+      updateListWithOriginalRecipes();
+
+      if (globalState.filters.length > 0) {
+        filterByTag(globalState.recipes, globalState.filters);
+      }
     });
   }
 }
